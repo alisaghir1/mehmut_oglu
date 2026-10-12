@@ -1,0 +1,93 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "menu": "Menü",
+    "services": "Hizmetler",
+    "news": "Haberler",
+    "contact": "İletişim",
+    "reserve": "Rezervasyon",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "switchLocale": "English",
+    "skipToContent": "İçeriğe geç"
+  },
+  "hero": {
+    "scroll": "Kaydır",
+    "slide": "Slayt {current} / {total}",
+    "prev": "Önceki slayt",
+    "next": "Sonraki slayt",
+    "pause": "Slayt gösterisini durdur",
+    "play": "Slayt gösterisini başlat"
+  },
+  "about": {
+    "readMore": "Hikâyemiz"
+  },
+  "menu": {
+    "viewAll": "Tüm menü",
+    "tabs": "Menü kategorileri",
+    "unavailable": "Tükendi",
+    "viewImage": "{name} fotoğrafını görüntüle"
+  },
+  "gallery": {
+    "open": "{index}. fotoğrafı aç"
+  },
+  "news": {
+    "readMore": "Devamını oku",
+    "backToNews": "Haberlere dön",
+    "allNews": "Tüm haberler",
+    "publishedOn": "{date} tarihinde yayımlandı",
+    "close": "Kapat"
+  },
+  "contact": {
+    "writeTitle": "Bize yazın",
+    "name": "Adınız",
+    "email": "E-postanız",
+    "message": "Mesajınız",
+    "send": "Mesaj gönder",
+    "sending": "Gönderiliyor…",
+    "success": "Teşekkürler — mesajınız yola çıktı.",
+    "error": "Bir sorun oluştu. Lütfen tekrar deneyin.",
+    "phone": "Telefon",
+    "emailLabel": "E-posta",
+    "address": "Adres",
+    "hours": "Çalışma saatleri"
+  },
+  "reservation": {
+    "name": "Ad soyad",
+    "phone": "Telefon",
+    "email": "E-posta",
+    "date": "Tarih",
+    "time": "Saat",
+    "guests": "Kişi sayısı",
+    "guestsCount": "{count} kişi",
+    "notes": "Özel istekler",
+    "submit": "Masa talep et",
+    "submitting": "Talep gönderiliyor…",
+    "success": "Talebiniz alındı. Kısa süre içinde telefon veya e-posta ile onaylayacağız.",
+    "error": "Talebiniz gönderilemedi. Lütfen bizi arayın."
+  },
+  "validation": {
+    "required": "Bu alan zorunludur",
+    "email": "Geçerli bir e-posta adresi girin",
+    "phone": "Geçerli bir telefon numarası girin",
+    "date": "Bugünden itibaren bir tarih seçin",
+    "guests": "1 ile 20 kişi arasında",
+    "tooLong": "Çok uzun"
+  },
+  "footer": {
+    "rights": "© <year></year> {name}. Tüm hakları saklıdır.",
+    "builtWith": "{year}'den beri Döner & İskender",
+    "backToTop": "Başa dön"
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "body": "Aradığınız sayfa menüden çıkarılmış.",
+    "home": "Ana sayfaya dön"
+  },
+  "meta": {
+    "title": "Mehmet Oglu — Döner & İskender",
+    "description": "1928'den beri İstanbul'da premium Türk döner ve ızgara evi. Elle dizilmiş döner, Bursa usulü İskender, meze ve baklava.",
+    "newsTitle": "Haberler — Mehmet Oglu"
+  }
+}

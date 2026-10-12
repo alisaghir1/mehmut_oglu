@@ -1,0 +1,93 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "menu": "Menu",
+    "services": "Services",
+    "news": "News",
+    "contact": "Contact",
+    "reserve": "Reserve",
+    "openMenu": "Open navigation",
+    "closeMenu": "Close navigation",
+    "switchLocale": "Türkçe",
+    "skipToContent": "Skip to content"
+  },
+  "hero": {
+    "scroll": "Scroll",
+    "slide": "Slide {current} of {total}",
+    "prev": "Previous slide",
+    "next": "Next slide",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow"
+  },
+  "about": {
+    "readMore": "Our story"
+  },
+  "menu": {
+    "viewAll": "Full menu",
+    "tabs": "Menu categories",
+    "unavailable": "Sold out",
+    "viewImage": "View photo of {name}"
+  },
+  "gallery": {
+    "open": "Open photo {index}"
+  },
+  "news": {
+    "readMore": "Read more",
+    "backToNews": "Back to news",
+    "allNews": "All news",
+    "publishedOn": "Published {date}",
+    "close": "Close"
+  },
+  "contact": {
+    "writeTitle": "Please write",
+    "name": "Your name",
+    "email": "Your email",
+    "message": "Your message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Thank you — your message is on its way.",
+    "error": "Something went wrong. Please try again.",
+    "phone": "Phone",
+    "emailLabel": "Email",
+    "address": "Address",
+    "hours": "Opening hours"
+  },
+  "reservation": {
+    "name": "Full name",
+    "phone": "Phone",
+    "email": "Email",
+    "date": "Date",
+    "time": "Time",
+    "guests": "Guests",
+    "guestsCount": "{count, plural, one {# guest} other {# guests}}",
+    "notes": "Special requests",
+    "submit": "Request a table",
+    "submitting": "Sending request…",
+    "success": "Request received. We'll confirm by phone or email shortly.",
+    "error": "We couldn't send your request. Please call us instead."
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "phone": "Please enter a valid phone number",
+    "date": "Please pick a date from today onwards",
+    "guests": "Between 1 and 20 guests",
+    "tooLong": "Too long"
+  },
+  "footer": {
+    "rights": "© <year></year> {name}. All rights reserved.",
+    "builtWith": "Döner & İskender since {year}",
+    "backToTop": "Back to top"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you were looking for has been carved off the menu.",
+    "home": "Back home"
+  },
+  "meta": {
+    "title": "Mehmet Oglu — Döner & İskender",
+    "description": "Premium Turkish döner & grill house in İstanbul since 1928. Hand-stacked döner, Bursa-style İskender, meze and baklava.",
+    "newsTitle": "News — Mehmet Oglu"
+  }
+}

@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Mehmet Oglu — design tokens
+   Geometry & typography scale: Dinex dark theme (02-DARK-MODE/style.css)
+   Palette: "Mehmet Oglu Colors.pdf" mapped onto the Dinex neutral roles
+   ------------------------------------------------------------------ */
+@theme {
+  /* Backgrounds (Dinex: #111 / #151515 / #1e1e1e; brand charcoal #222222) */
+  --color-ink-950: #0d0d0d;
+  --color-ink-900: #111111;
+  --color-ink-850: #151515;
+  --color-ink-800: #1b1b1b;
+  --color-ink-700: #222222;
+  --color-ink-600: #2d2d2d;
+  --color-ink-500: #4c4c4c;
+
+  /* Text — brand neutrals replacing Dinex #fff / #e0e0e0 / #b2b2b2 / #5f5f5f */
+  --color-cream: #f7f1e7;
+  --color-parchment: #f0dbbc;
+  --color-sand: #d8c1a2;
+  --color-stone: #8a877a;
+  --color-muted: #6f6b63;
+
+  /* Brand accents */
+  --color-oxblood: #880807;
+  --color-oxblood-light: #a51312;
+  --color-oxblood-dark: #5e0505;
+  --color-brass: #b08a57;
+  --color-walnut: #6a4a3c;
+  --color-ink-blue: #182f68;
+
+  /* Semantic aliases */
+  --color-background: var(--color-ink-850);
+  --color-surface: var(--color-ink-900);
+  --color-surface-raised: var(--color-ink-700);
+  --color-foreground: var(--color-parchment);
+  --color-accent: var(--color-oxblood);
+
+  /* Typography */
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-raleway), Raleway, system-ui, sans-serif;
+
+  --text-eyebrow: 0.75rem; /* 12px hero-subheading */
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.05em;
+  --text-label: 0.9375rem; /* 15px item-name / section-title */
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: -0.04em;
+  --text-display: clamp(2.5rem, 1.6rem + 3.2vw, 3.4375rem); /* 55px hero-heading */
+  --text-display--line-height: 1.15;
+  --text-display--letter-spacing: -0.04em;
+  --text-quote: clamp(1.5rem, 1rem + 1.8vw, 2.1875rem); /* 35px testimonial */
+  --text-quote--line-height: 1.75;
+
+  /* Dinex vertical rhythm (divider-s/m/l/xl) */
+  --spacing-divider-s: 25px;
+  --spacing-divider-m: 50px;
+  --spacing-divider-l: 100px;
+  --spacing-divider-xl: 200px;
+  --spacing-frame: 40px; /* .section-all side margins */
+
+  /* Shapes */
+  --radius-card: 20px;
+  --radius-feature: 50px;
+
+  /* Motion */
+  --ease-dinex: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Soft warm glow used on raised cards / buttons */
+  --shadow-glow: 0 0 0 1px rgb(240 219 188 / 0.06), 0 20px 60px -20px rgb(0 0 0 / 0.7);
+  --shadow-accent: 0 10px 40px -12px rgb(136 8 7 / 0.55);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 15px;
+    font-weight: 500;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-oxblood);
+    color: var(--color-cream);
+  }
+
+  /* Dinex paragraph rhythm */
+  p {
+    @apply text-stone;
+    letter-spacing: 0.05em;
+    line-height: 2;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display text-cream;
+  }
+
+  a {
+    @apply transition-colors duration-500;
+  }
+
+  img {
+    @apply select-none;
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Utilities mirroring Dinex class semantics
+   ------------------------------------------------------------------ */
+
+/* .section-all — framed section with 40px side gutters on desktop */
+@utility section-frame {
+  position: relative;
+  overflow: hidden;
+  margin-inline: 0;
+  @media (width >= 64rem) {
+    margin-inline: var(--spacing-frame);
+  }
+}
+
+/* .divider-* — vertical rhythm blocks (xl/l collapse on tablet like Dinex) */
+@utility divider-s {
+  height: var(--spacing-divider-s);
+}
+@utility divider-m {
+  height: var(--spacing-divider-m);
+}
+@utility divider-l {
+  height: 80px;
+  @media (width >= 64rem) {
+    height: var(--spacing-divider-l);
+  }
+}
+@utility divider-xl {
+  height: 130px;
+  @media (width >= 64rem) {
+    height: var(--spacing-divider-xl);
+  }
+}
+
+/* .the-line — 1px x 80px vertical rule */
+@utility the-line {
+  width: 1px;
+  height: 80px;
+  margin-inline: auto;
+  background: var(--color-muted);
+}
+
+/* .section-title-line > span — eyebrow with 15px hairlines on both sides */
+@utility eyebrow-lines {
+  position: relative;
+  display: inline-block;
+  padding-inline: 30px;
+  line-height: 1;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    height: 1px;
+    background: currentColor;
+  }
+  &::before {
+    left: 0;
+  }
+  &::after {
+    right: 0;
+  }
+}
+
+/* .hero-subheading span — leading label with 30px rule to the right */
+@utility eyebrow-rule {
+  position: relative;
+  display: inline-block;
+  padding-right: 60px;
+  margin-right: 30px;
+  line-height: 1;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 30px;
+    height: 1px;
+    margin-top: -1px;
+    background: currentColor;
+  }
+}
+
+/* .item-divider — dashed leader between dish name and price */
+@utility leader-dashed {
+  flex: 1;
+  margin-inline: 15px;
+  border-bottom: 1px dashed var(--color-ink-500);
+  transform: translateY(-0.35em);
+}
+
+/* Dinex underline inputs: bottom border only */
+@utility input-line {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--color-ink-500);
+  padding: 12px 4px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-cream);
+  transition: border-color 0.5s linear;
+  &::placeholder {
+    color: var(--color-stone);
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  &:focus {
+    outline: none;
+    border-bottom-color: var(--color-oxblood-light);
+  }
+  &:focus::placeholder {
+    color: transparent;
+  }
+}
+
+/* Thin hairline gradient used as section separators */
+@utility hairline {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgb(138 135 122 / 0),
+    rgb(138 135 122 / 1) 50%,
+    rgb(138 135 122 / 0)
+  );
+}
+
+/* Hide scrollbar for horizontal scrollers (menu tabs on mobile) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
