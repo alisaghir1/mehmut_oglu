@@ -1,14 +1,18 @@
 import createIntlMiddleware from "next-intl/middleware";
 import type { NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
+import { updateSession } from "./lib/supabase/proxy";
 
 const intl = createIntlMiddleware(routing);
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    return updateSession(request);
+  }
   return intl(request);
 }
 
 export const config = {
-  // Public, localised site only. /admin, /api, Next internals and static files are excluded.
-  matcher: ["/((?!admin|api|_next|_vercel|.*\\..*).*)"],
+  // Everything except API routes, Next internals and static files.
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };

@@ -10,6 +10,7 @@ import { Services } from "@/components/sections/services";
 import { Team } from "@/components/sections/team";
 import type { Locale } from "@/i18n/routing";
 import { getSiteContent, t } from "@/lib/content";
+import { restaurantJsonLd } from "@/lib/json-ld";
 
 export default async function HomePage({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
@@ -21,6 +22,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: L
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(restaurantJsonLd(c, locale)) }} />
       <Hero slides={sorted(c.heroSlides)} />
       {s.about?.isEnabled && <About heading={s.about} about={c.about} locale={locale} />}
       {s.team?.isEnabled && <Team heading={s.team} team={sorted(c.team)} locale={locale} />}

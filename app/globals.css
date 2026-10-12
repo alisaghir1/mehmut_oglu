@@ -265,3 +265,34 @@
     display: none;
   }
 }
+
+/* ------------------------------------------------------------------
+   Admin panel primitives
+   ------------------------------------------------------------------ */
+@utility admin-input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgb(240 219 188 / 0.12);
+  background: var(--color-ink-900);
+  padding: 10px 12px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-cream);
+  transition: border-color 0.3s;
+  &::placeholder {
+    color: var(--color-muted);
+  }
+  &:focus {
+    outline: none;
+    border-color: var(--color-brass);
+  }
+  &[aria-invalid="true"] {
+    border-color: var(--color-oxblood-light);
+  }
+}
+
+@utility admin-card {
+  border-radius: var(--radius-card);
+  border: 1px solid rgb(240 219 188 / 0.08);
+  background: var(--color-ink-800);
+}

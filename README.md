@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mehmet Oglu — Döner & İskender
 
-## Getting Started
+Bilingual (EN/TR) restaurant website with a Supabase-backed admin panel.
+Design language: the **Dinex dark** template geometry, re-skinned with the
+Mehmet Oglu brand palette (charcoal, parchment, blood red, antique brass).
 
-First, run the development server:
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16 (App Router, Cache Components, Server Actions) |
+| Styling | Tailwind CSS v4 — tokens in `app/globals.css` |
+| Motion | Framer Motion (hero slider, scroll reveals, tabs, drawer) |
+| i18n | next-intl — `/en`, `/tr` via `proxy.ts` |
+| Data | Supabase (Postgres + RLS, Auth, Storage) with `@supabase/ssr` |
+| Images | `next/image` (AVIF/WebP), `yet-another-react-lightbox` |
+
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env.local      # fill in Supabase URL + anon key
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Without Supabase configured the public site still renders from the bundled
+demo seed (`lib/content/seed.ts`) and form submissions are logged to the console.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Supabase setup (one time)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Create a project at supabase.com and copy **Project URL** and **anon key**
+   into `.env.local`.
+2. In the SQL editor run, in order:
+   - `supabase/migrations/0001_schema.sql` — tables, RLS, storage bucket
+   - `supabase/migrations/0002_seed.sql` — demo content
+3. Create your admin user under **Authentication → Users** (email + password),
+   then grant admin rights:
+   ```sql
+   insert into public.admins (user_id)
+   select id from auth.users where email = 'you@example.com';
+   ```
+4. Restart `npm run dev` and sign in at `/admin/login`.
 
-## Learn More
+Set `NEXT_PUBLIC_SITE_URL` to the production domain for correct canonical,
+OpenGraph and sitemap URLs.
 
-To learn more about Next.js, take a look at the following resources:
+## Project layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/
+  (site)/[locale]/        public site (home, /news, /news/[slug], 404, OG image)
+  (admin)/admin/          login + authenticated admin shell (dashboard, CRUD, inbox)
+  actions/                Server Actions (public forms, admin CRUD/auth/upload)
+components/
+  sections/               Hero, About, Team, Menu, Services, Interior, News, Contact
+  layout/                 Header (drawer, locale switch), Footer, BackToTop
+  forms/                  Contact + reservation forms (useActionState)
+  motion/                 Reveal/Stagger, CountUp, ParallaxImage
+  admin/                  Sidebar, RecordForm, ImageField, LoginForm
+lib/
+  content/                types, seed, Supabase loader, cached `getSiteContent()`
+  admin/resources.ts      declarative CRUD definitions for every table
+  supabase/               server/browser clients, proxy session refresh, auth guards
+  forms/                  zod schemas + persistence
+i18n/, messages/          routing config and EN/TR UI strings
+supabase/migrations/      schema + seed SQL
+public/brand, images/     logo (SVG/PNG), optimised brand renders, placeholders
+_source/ (git-ignored)    original template + brand files for reference
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content model
 
-## Deploy on Vercel
+Bilingual text is stored as JSONB `{ "en": "…", "tr": "…" }`. Every content
+table is editable in `/admin`; saving calls `updateTag("site-content")` so the
+statically cached site updates immediately. Public forms insert into
+`contact_messages` / `reservations` (insert-only RLS); admins triage them in
+**Inbox**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To change what the admin can edit, update `lib/admin/resources.ts` — list
+columns, fields, validation and the form UI derive from it.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+
+```bash
+npm run dev      # dev server
+npm run build    # production build (type-checks)
+npm run lint     # eslint
+npx tsx scripts/generate-seed-sql.ts   # regenerate 0002_seed.sql from seed.ts
+```
