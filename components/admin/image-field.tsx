@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, useState, useTransition } from "react";
 import { uploadImage } from "@/app/actions/admin";
+import { isSupportedImageSource } from "@/lib/images";
 
 interface ImageFieldProps {
   name: string;
@@ -18,6 +19,9 @@ export function ImageField({ name, defaultValue = "", folder, required, error }:
   const [err, setErr] = useState<string | undefined>();
   const [pending, start] = useTransition();
   const fileRef = useRef<HTMLInputElement>(null);
+  const sourceError = url && !isSupportedImageSource(url)
+    ? "Use a local image path or upload an image to Supabase Storage."
+    : undefined;
 
   const onFile = (file: File | undefined) => {
     if (!file) return;
@@ -35,22 +39,23 @@ export function ImageField({ name, defaultValue = "", folder, required, error }:
   return (
     <div className="flex flex-wrap items-start gap-4">
       <div className="relative h-28 w-40 shrink-0 overflow-hidden rounded-lg border border-parchment/10 bg-ink-900">
-        {url ? (
-          <Image src={url} alt="" fill sizes="160px" className="object-cover" unoptimized={!url.startsWith("/")} />
+        {url && !sourceError ? (
+          <Image src={url} alt="" fill sizes="160px" loading="eager" className="object-cover" unoptimized={!url.startsWith("/")} />
         ) : (
           <span className="flex h-full items-center justify-center text-[11px] uppercase tracking-[0.2em] text-muted">No image</span>
         )}
         {pending && <span className="absolute inset-0 flex items-center justify-center bg-ink-950/70 text-[11px] uppercase tracking-[0.2em] text-cream">Uploading…</span>}
       </div>
 
-      <div className="min-w-[240px] flex-1 space-y-2">
+      <div className="min-w-0 flex-1 basis-60 space-y-2">
         <input type="hidden" name={name} value={url} />
         <input
           type="text"
+          id={name}
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://… or /images/…"
-          aria-invalid={!!(error || err) || undefined}
+          aria-invalid={!!(error || err || sourceError) || undefined}
           className="admin-input"
           required={required}
         />
@@ -70,7 +75,7 @@ export function ImageField({ name, defaultValue = "", folder, required, error }:
           )}
           <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => onFile(e.target.files?.[0])} />
         </div>
-        {(error || err) && <p className="text-[12px] !text-oxblood-light">{error || err}</p>}
+        {(error || err || sourceError) && <p role="alert" className="text-[12px] !text-oxblood-light">{error || err || sourceError}</p>}
       </div>
     </div>
   );

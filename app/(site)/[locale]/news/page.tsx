@@ -7,13 +7,21 @@ import { PageHero } from "@/components/ui/page-hero";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { getSiteContent, t } from "@/lib/content";
+import { SITE_URL, languageAlternates } from "@/lib/seo";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const tm = await getTranslations({ locale, namespace: "meta" });
-  return { title: tm("newsTitle") };
+  return {
+    title: { absolute: tm("newsTitle") },
+    alternates: {
+      canonical: `${SITE_URL}/${locale}/news`,
+      languages: languageAlternates("/news"),
+    },
+    openGraph: { title: tm("newsTitle"), url: `${SITE_URL}/${locale}/news` },
+  };
 }
 
 export default async function NewsIndexPage({ params }: Props) {

@@ -15,11 +15,14 @@ Mehmet Oglu brand palette (charcoal, parchment, blood red, antique brass).
 | Data | Supabase (Postgres + RLS, Auth, Storage) with `@supabase/ssr` |
 | Images | `next/image` (AVIF/WebP), `yet-another-react-lightbox` |
 
+Next.js and its ESLint configuration are pinned to 16.4.3. Upgrade reminders
+use the security policy to recommend patched stable releases.
+
 ## Getting started
 
 ```bash
 npm install
-cp .env.example .env.local      # fill in Supabase URL + anon key
+cp .env.example .env.local      # fill in Supabase URL + publishable key
 npm run dev
 ```
 
@@ -28,8 +31,12 @@ demo seed (`lib/content/seed.ts`) and form submissions are logged to the console
 
 ### Supabase setup (one time)
 
-1. Create a project at supabase.com and copy **Project URL** and **anon key**
-   into `.env.local`.
+1. Create a project at supabase.com and copy **Project URL** (Project Settings
+   → API) and **publishable key** (Project Settings → API Keys) into `.env.local`
+   as `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+   The legacy `NEXT_PUBLIC_SUPABASE_ANON_KEY` is also supported as a fallback.
+   No secret/service-role key or database password is needed by this app;
+   never put those in `NEXT_PUBLIC_*` variables.
 2. In the SQL editor run, in order:
    - `supabase/migrations/0001_schema.sql` — tables, RLS, storage bucket
    - `supabase/migrations/0002_seed.sql` — demo content
@@ -85,5 +92,12 @@ columns, fields, validation and the form UI derive from it.
 npm run dev      # dev server
 npm run build    # production build (type-checks)
 npm run lint     # eslint
+npm test         # public/admin validation and Supabase environment regression tests
 npx tsx scripts/generate-seed-sql.ts   # regenerate 0002_seed.sql from seed.ts
 ```
+
+Public form dates are validated as real calendar dates and times as 24-hour
+`HH:mm` values. The mobile public navigation traps keyboard focus while open;
+the admin navigation collapses on smaller screens and tables scroll horizontally.
+Admin image URLs must be local paths or public URLs from this project's Supabase
+Storage, matching the image optimizer's configured host.

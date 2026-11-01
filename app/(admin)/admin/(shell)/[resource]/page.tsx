@@ -7,6 +7,7 @@ import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
 
 type Row = Record<string, unknown>;
+export const instant = false;
 
 export default async function ResourceListPage({
   params,
@@ -64,7 +65,7 @@ export default async function ResourceListPage({
         </p>
       )}
 
-      <div className="admin-card overflow-hidden">
+      <div className="admin-card overflow-x-auto">
         <table className="w-full text-left text-[13px]">
           <thead className="bg-ink-900/60 text-[10px] uppercase tracking-[0.2em] text-muted">
             <tr>

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isSupportedImageSource } from "../images";
 
 export type FieldType =
   | "text"
@@ -250,13 +251,16 @@ export function buildSchema(def: ResourceDef) {
         shape[f.name] = z.boolean();
         break;
       case "image":
-        shape[f.name] = req ? z.string().trim().min(1, "An image is required") : z.string().trim();
+        shape[f.name] = z.string().trim().refine(
+          (src) => (!req && src === "") || isSupportedImageSource(src),
+          "Use a local image path or a public image from this project's Supabase Storage",
+        );
         break;
       case "image-list":
-        shape[f.name] = z.array(z.string().trim().min(1));
+        shape[f.name] = z.array(z.string().trim().refine(isSupportedImageSource, "Unsupported image URL"));
         break;
       case "date":
-        shape[f.name] = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD");
+        shape[f.name] = z.iso.date("Use a valid date in YYYY-MM-DD format");
         break;
       case "slug":
         shape[f.name] = z

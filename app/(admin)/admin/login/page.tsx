@@ -19,7 +19,7 @@ export default async function LoginPage({
     <main className="flex min-h-svh items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="mb-10 flex flex-col items-center text-center">
-          <Image src="/brand/logo.svg" alt="Mehmet Oglu" width={90} height={100} unoptimized />
+          <Image src="/brand/logo.svg" alt="Mehmet Oglu" width={90} height={100} loading="eager" unoptimized />
           <h1 className="mt-6 font-display text-2xl font-bold text-cream">Admin</h1>
           <p className="mt-1 text-[12px] uppercase tracking-[0.2em]">Mehmet Oglu</p>
         </div>
@@ -31,7 +31,7 @@ export default async function LoginPage({
             <p className="!text-parchment">Supabase is not configured.</p>
             <p className="mt-2">
               Copy <code className="text-sand">.env.example</code> to <code className="text-sand">.env.local</code>, add your
-              project URL and anon key, run the SQL migrations in <code className="text-sand">supabase/migrations</code>, then
+              project URL and publishable key, run the SQL migrations in <code className="text-sand">supabase/migrations</code>, then
               restart the dev server.
             </p>
           </div>

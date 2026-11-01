@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useId } from "react";
 import { useTranslations } from "next-intl";
 import type { FormState } from "@/lib/forms/schemas";
 
@@ -22,7 +23,7 @@ type FieldProps = {
 /** Dinex underline input with floating label and inline validation. */
 export function Field({ name, label, error, type = "text", multiline, className = "", ...rest }: FieldProps) {
   const tv = useTranslations("validation");
-  const id = `field-${name}`;
+  const id = `field-${name}-${useId()}`;
   const errId = `${id}-error`;
   const common = {
     id,

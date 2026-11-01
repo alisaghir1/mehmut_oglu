@@ -4,6 +4,8 @@ import { StatusBadge } from "@/components/admin/status-badge";
 import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
 
+export const instant = false;
+
 export default async function AdminDashboard() {
   await requireAdmin();
   const sb = await createClient();

@@ -1,4 +1,5 @@
 import "server-only";
+import { io } from "next/cache";
 import { redirect } from "next/navigation";
 import { isSupabaseConfigured } from "./env";
 import { createClient } from "./server";
@@ -23,6 +24,7 @@ export async function isAdmin() {
 
 /** Guard for admin pages and Server Actions. Redirects when not an admin. */
 export async function requireAdmin() {
+  await io();
   const user = await getUser();
   if (!user) redirect("/admin/login");
   if (!(await isAdmin())) redirect("/admin/login?error=forbidden");

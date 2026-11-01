@@ -18,11 +18,8 @@ export const reservationSchema = z.object({
     .min(1, "required")
     .regex(/^[+\d][\d\s().-]{6,24}$/, "phone"),
   email: z.string().trim().email("email").max(200, "tooLong").or(z.literal("")),
-  date: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, "date")
-    .refine((d) => d >= today(), "date"),
-  time: z.string().regex(/^\d{2}:\d{2}$/, "required"),
+  date: z.iso.date("date").refine((d) => d >= today(), "date"),
+  time: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "required"),
   guests: z.coerce.number().int().min(1, "guests").max(20, "guests"),
   notes: z.string().trim().max(1000, "tooLong").optional().or(z.literal("")),
   website: z.string().max(0).optional(),

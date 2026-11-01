@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,8 @@ export function Header() {
   const [pastHero, setPastHero] = useState(false);
   const [active, setActive] = useState<SectionId>("home");
   const [open, setOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const reduce = useReducedMotion();
   // Dinex `navbar-bg-switch`: transparent over the hero, solid once scrolled (or on inner pages).
   const scrolled = !isHome || pastHero;
@@ -67,9 +69,30 @@ export function Header() {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const drawer = drawerRef.current;
+    const trigger = menuButtonRef.current;
+    const focusable = () =>
+      Array.from(drawer?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? []);
+    focusable()[0]?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Tab") return;
+      const elements = focusable();
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      trigger?.focus();
+    };
   }, [open]);
 
   const href = (id: SectionId) => (id === "home" ? "/" : `/#${id}`);
@@ -132,6 +155,7 @@ export function Header() {
           </div>
 
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setOpen(true)}
             aria-label={t("openMenu")}
@@ -147,6 +171,7 @@ export function Header() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={drawerRef}
             id="mobile-drawer"
             role="dialog"
             aria-modal="true"

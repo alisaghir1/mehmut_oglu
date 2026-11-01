@@ -36,7 +36,7 @@ export function RecordForm({ def, id, row, refOptions }: RecordFormProps) {
             </div>
             <div>
               <FieldInput f={f} value={row?.[f.name]} def={def} refOptions={refOptions} errors={errors} />
-              {errors[f.name] && (
+              {errors[f.name] && f.type !== "image" && (
                 <p role="alert" className="mt-2 text-[12px] !text-oxblood-light">
                   {errors[f.name]}
                 </p>
@@ -75,7 +75,7 @@ function DeleteButton({ resourceKey, id, label }: { resourceKey: string; id: str
   return (
     <span className="ml-auto flex items-center gap-3 text-[12px]">
       <span className="!text-parchment">Delete permanently?</span>
-      <button type="button" formAction={undefined} onClick={() => deleteRecord(resourceKey, id)} className="rounded-lg bg-oxblood px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-cream">
+      <button type="submit" formAction={deleteRecord.bind(null, resourceKey, id)} formNoValidate className="rounded-lg bg-oxblood px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-cream">
         Yes, delete
       </button>
       <button type="button" onClick={() => setConfirm(false)} className="text-[11px] font-bold uppercase tracking-[0.15em] text-sand">

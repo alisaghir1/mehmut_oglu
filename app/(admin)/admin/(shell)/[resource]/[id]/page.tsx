@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/server";
 
 type Row = Record<string, unknown>;
+export const instant = false;
 
 export default async function RecordPage({ params }: { params: Promise<{ resource: string; id: string }> }) {
   const { resource, id: rawId } = await params;

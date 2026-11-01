@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { StatusBadge } from "@/components/admin/status-badge";
 
 export const metadata = { title: "Inbox" };
+export const instant = false;
 
 export default async function InboxPage() {
   await requireAdmin();
@@ -22,7 +23,7 @@ export default async function InboxPage() {
 
       <section className="mb-12">
         <h2 className="mb-4 font-display text-xl font-bold text-cream">Reservations</h2>
-        <div className="admin-card overflow-hidden">
+        <div className="admin-card overflow-x-auto">
           <table className="w-full text-left text-[13px]">
             <thead className="bg-ink-900/60 text-[10px] uppercase tracking-[0.2em] text-muted">
               <tr>

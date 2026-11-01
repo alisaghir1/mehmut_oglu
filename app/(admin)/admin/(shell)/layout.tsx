@@ -18,9 +18,9 @@ export default async function AdminShellLayout({ children }: { children: React.R
   ]);
 
   return (
-    <div className="flex min-h-svh">
+    <div className="flex min-h-svh flex-col lg:flex-row">
       <AdminSidebar email={user.email ?? ""} unread={(unreadMsgs ?? 0) + (pendingRes ?? 0)} />
-      <main className="flex-1 overflow-x-hidden px-8 py-8 lg:px-12">{children}</main>
+      <main className="min-w-0 flex-1 px-4 py-8 sm:px-8 lg:px-12">{children}</main>
     </div>
   );
 }
